@@ -14,11 +14,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -145,6 +144,8 @@ public class Order {
     public void setStatusUpdatedAt(LocalDateTime statusUpdatedAt) {
         this.statusUpdatedAt = statusUpdatedAt;
     }
+
+
 
     @Override
     public String toString() {

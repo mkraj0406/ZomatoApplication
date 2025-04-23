@@ -37,11 +37,18 @@ try{
         System.out.println("Email: " + email + " | Role: " + role);
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            System.out.println("entered in if block of JWTAuthFilter");
+            System.out.println("Authentication after setting: " + SecurityContextHolder.getContext().getAuthentication());
+
+//            if(SecurityContextHolder.getContext().getAuthentication() != null){
+//                SecurityContextHolder.getContext().setAuthentication(null);
+//            }
             if (jwtUtil.validateToken(token)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         email, null,  List.of(new SimpleGrantedAuthority("ROLE_" + role)));
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                System.out.println("Authentication set: " + SecurityContextHolder.getContext().getAuthentication());
             }else{
                 System.out.println("invalid token!!!!!!!!!");
             }

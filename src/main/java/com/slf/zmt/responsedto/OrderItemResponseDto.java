@@ -1,24 +1,17 @@
-package com.slf.zmt.entity;
+package com.slf.zmt.responsedto;
 
-import jakarta.persistence.*;
+import com.slf.zmt.entity.MenuItem;
+import com.slf.zmt.entity.Order;
+import jakarta.persistence.ManyToOne;
 
-import java.util.IdentityHashMap;
+public class OrderItemResponseDto {
 
-@Entity
-@Table(name = "order_items")
-public class OrderItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
 
-    @ManyToOne
-    private User user;
+    private Long userId;
 
-    @ManyToOne
-    private MenuItem  menuItem;
+    private Long menuId;
 
-    @ManyToOne
     private Order order;
 
     private int quantity;
@@ -26,23 +19,6 @@ public class OrderItem {
     private double price;
 
     private Double totalPrice = 0.0;
-
-    public double calculateTotalPrice() {
-       return this.quantity * this.price;
-    }
-
-    @PreUpdate
-    public void calculateTotalPriceOfItems(){
-       totalPrice =  this.quantity * this.price;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Long getOrderItemId() {
         return orderItemId;
@@ -52,12 +28,20 @@ public class OrderItem {
         this.orderItemId = orderItemId;
     }
 
-    public MenuItem getMenuItem() {
-        return menuItem;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setMenuItem(MenuItem menuItem) {
-        this.menuItem = menuItem;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     public Order getOrder() {
@@ -92,15 +76,14 @@ public class OrderItem {
         this.totalPrice = totalPrice;
     }
 
-
     @Override
     public String toString() {
-        return "OrderItem{" +
-                "orderItemId=" + orderItemId +
-                ", menuItem=" + menuItem +
+        return "OrderItemResponseDto{" +
+                "menuId=" + menuId +
                 ", order=" + order +
                 ", quantity=" + quantity +
                 ", price=" + price +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

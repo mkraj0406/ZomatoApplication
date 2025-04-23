@@ -36,7 +36,7 @@ public class Restaurant {
     @Column(name ="phone_no")
     private String phoneNo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL,orphanRemoval = true)

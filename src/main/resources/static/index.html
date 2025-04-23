@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pay with Razorpay</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<h2>Pay 500</h2>
+<button id="payBtn">Pay Now</button>
+
+<script>
+    document.getElementById("payBtn").onclick = async function () {
+      const amount = 500;
+      const response = await fetch("/api/payment/create?amount=" + amount, { method: "POST" });
+      const order = await response.json();
+
+      const options = {
+        "key": "YOUR_KEY_ID", // from Razorpay
+        "amount": order.amount,
+        "currency": "INR",
+        "name": "Zomato Clone",
+        "description": "Test Transaction",
+        "order_id": order.id,
+        "callback_url": "http://localhost:8081/api/payment/success",
+        "prefill": {
+          "name": "Mayank Kumar",
+          "email": "mayank@example.com",
+          "contact": "9999999999"
+        },
+        "theme": {
+          "color": "#F37254"
+        }
+      };
+
+      const razorpay = new Razorpay(options);
+      razorpay.open();
+    };
+</script>
+
+</body>
+</html>
